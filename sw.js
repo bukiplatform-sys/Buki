@@ -1,0 +1,6 @@
+/* Only public same-origin app assets are cached, never sessions or API responses. */
+const CACHE='buki-shell-v5';
+const ASSETS=['./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('buki-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',event=>{const url=new URL(event.request.url),base=new URL(self.registration.scope);if(event.request.method!=='GET'||url.origin!==base.origin)return;const allowed=ASSETS.map(p=>new URL(p,base).pathname);if(event.request.mode==='navigate'&&(url.pathname===base.pathname||url.pathname===new URL('./index.html',base).pathname)){event.respondWith(fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(new URL('./index.html',base).href,copy)));}return response;}).catch(()=>caches.match(new URL('./index.html',base).href)));return;}if(allowed.includes(url.pathname))event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request)));});
