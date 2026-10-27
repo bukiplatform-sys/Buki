@@ -1,7 +1,0 @@
-{
-  "id":"./", "name":"Buki — İngilizce yolculuğun", "short_name":"Buki",
-  "description":"A1–B2 İngilizce alıştırmaları ve kişisel öğrenme haritası.",
-  "lang":"tr", "start_url":"./index.html", "scope":"./", "display":"standalone",
-  "background_color":"#f5f7ef", "theme_color":"#c5e59d",
-  "icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
-}
