@@ -1,130 +1,19 @@
-CANLI KURULUM NOTU — 28 EKİM 2026
-Site, destek veritabanı, iki Edge Function ve iki cron görevi yayınlandı.
-Bu sürüm Telegram yapılandırmasını Edge Secrets yerine Supabase Vault üzerinden
-buki_support_runtime() ile okur. Bu RPC yalnızca service_role tarafından çağrılabilir.
-Vault adları: buki_support_bot_token, buki_support_webhook_secret,
-buki_support_worker_secret, buki_support_chat_id, buki_support_admin_id.
-Bot token ve iki rastgele secret kaydedildi. Telegram yönetici hesabını bağlama
-ve 10 günlük otomatik silme doğrulaması henüz tamamlanmadı. Webhook henüz kurulmadı.
-Eski aşağıdaki manuel kurulumdaki Edge Secrets adımları bu canlı kurulumun
-yapılandırma kaynağı değildir; Vault değerleri önceliklidir.
-Token yenilerken Vault buki_support_bot_token değerini değiştir.
+BUKI TELEGRAM DESTEK — GÜNCEL YAPILANDIRMA
 
-BUKI 5.3 — TELEGRAM ÜZERİNDEN İKİ TARAFLI DESTEK
+Kullanıcının isteğiyle 10 günlük otomatik silme kaldırıldı.
+Sitedeki sohbetler otomatik silinmez. Telegram otomatik silme şartı yoktur.
 
-Durum: Kod ve SQL hazır; bu paket canlı hesabına otomatik kurulmuş değildir.
-Studio 5.1 temel alınmıştır. İptal ettiğin v5.2 özellikleri eklenmemiştir.
-51 otomatik test geçti. Gerçek Telegram/Supabase uçtan uca testi ve tarayıcı görsel testi bu ortamda yapılmadı.
+Canlı Supabase projesi: aqmhjpcsasshttmkdkks
+Fonksiyonlar: buki-support (teslimat), buki-telegram (yanıt webhook).
+Yapılandırma yalnızca service_role erişimli buki_support_runtime RPC üzerinden Vault kasasından alınır.
+Vault adları: buki_support_bot_token, buki_support_chat_id, buki_support_admin_id, buki_support_webhook_secret, buki_support_worker_secret, buki_support_url.
+Hiçbir gizli değer GitHub veya site HTML dosyalarında tutulmaz.
 
-NE YAPAR?
-Hesap ayarları ve çalışma ayarlarından Canlı destek açılır. Öğrenci konu açar,
-mesaj gönderir ve son 10 günde mesaj içeren geçmiş sohbetlerini görür.
-Öğrenci Telegram hesabı açmak zorunda değildir. Yönetici kendi özel bot sohbetinde
-gelen öğrenci mesajına Telegram'ın Yanıtla işlemiyle cevap verir. Cevap doğru
-öğrencinin doğru sohbetine kaydedilir. Pencere açıkken yaklaşık 8 saniyede bir
-güncellenir. Şimdilik yalnızca metin desteklenir; dosya, ses ve fotoğraf yoktur.
-Dakikada 5, günde 50 öğrenci mesajı; mesaj başına en fazla 2000 karakter.
+Kurulu 10 günlük sürümden geçiş: support-persistent.sql.
+Yeni kurulum: support-schema.sql, support-runtime.sql; Vault değerleri tanımlandıktan sonra support-cron.sql.
+Eski 10 günlük SQL paketlerini bu yapılandırmanın üzerine tekrar çalıştırma.
 
-1. VERİTABANI
-Mevcut Buki Supabase projesinde SQL Editor'ü aç.
-Önce 01-Buki-Destek-SQL.txt dosyasının tamamını çalıştır.
-Bu ek migration mevcut auth.users, public.has_access() ve public.scores
-altyapısını kullanır. Mevcut çalışan Buki veritabanı üzerine uygulanır;
-boş bir projeye tek başına kurulum değildir. Eski öğrenme tablolarını silmez.
-
-2. TELEGRAM BOTU
-Telegram'da resmi @BotFather üzerinden Buki desteği için ayrı bir bot oluştur.
-Token'ı sakla; site HTML'ine veya GitHub'a koyma, bu sohbette paylaşma.
-Kendi Telegram hesabından bu botun özel sohbetini açıp /start gönder.
-Bu özel sohbetin otomatik silme süresini özel süre olarak TAM 10 gün ayarla.
-Kullandığın Telegram uygulaması özel süre sunmuyorsa güncel bir resmi istemci
-kullan. 7 veya 30 gün seçme: kod 10 gün ayarlı değilse mesaj iletimini durdurur.
-Bu sürüm tek yöneticiyle özel sohbet içindir, grup kurulumu değildir.
-
-3. SUNUCU GİZLİ DEĞERLERİ
-İki ayrı rastgele secret üret; her biri için bilgisayarında şu komutu kullan:
-python3 -c "import secrets; print(secrets.token_urlsafe(32))"
-Supabase Dashboard > Edge Functions > Secrets bölümüne şunları kaydet:
-TELEGRAM_BOT_TOKEN = BotFather token'ı
-TELEGRAM_CHAT_ID = kendi özel bot sohbetinin sayısal ID'si
-TELEGRAM_ADMIN_ID = kendi Telegram kullanıcı ID'n (özel sohbette CHAT_ID ile aynı)
-TELEGRAM_WEBHOOK_SECRET = ürettiğin birinci gizli değer
-SUPPORT_WORKER_SECRET = ürettiğin ikinci gizli değer
-SUPPORT_ALLOWED_ORIGINS = https://bukiplatform-sys.github.io
-Farklı özel alan adın varsa origin değerini değiştir; birden fazlası virgülle
-ayrılır, URL yolu eklenmez. SUPABASE_URL ve SUPABASE_SERVICE_ROLE_KEY Edge
-Functions ortamında Supabase tarafından sağlanır. service_role anahtarını
-kesinlikle tarayıcı koduna ekleme.
-
-ID'leri öğrenmek için configure-telegram.py aracını bilgisayarında Python 3 ile
-çalıştır. Token ve webhook secret girişleri gizlidir. /start gönderen hesapların
-ID'lerini listeler. Yalnızca kendi hesabını seç. Son EVET adımından önce ID'leri
-Edge secrets'a kaydet ve aşağıdaki iki fonksiyonu yayınla. Gerekirse ilk sefer
-EVET yazmadan çıkıp kurulumdan sonra aracı yeniden çalıştır.
-
-4. EDGE FUNCTIONS'I YAYINLA
-Supabase CLI kurulu bilgisayarda bu paketin ana klasöründen:
-supabase login
-supabase link --project-ref aqmhjpcsasshttmkdkks
-supabase functions deploy buki-support
-supabase functions deploy buki-telegram
-Başka projeye kuruyorsan project-ref ve site PLUS_SB/PLUS_PK yapılandırması
-birlikte değiştirilmelidir. Paket mevcut Buki proje adresini korur.
-supabase/config.toml içindeki JS entrypoint ve verify_jwt ayarlarını koru.
-Gateway JWT kontrolü kapalıdır; buki-support geçerli kullanıcı oturumunu veya
-gizli worker anahtarını kendisi doğrular. buki-telegram gizli webhook başlığını,
-yönetici kimliğini, bot kimliğini ve imzalı mesaj bağlantısını doğrular.
-
-5. OTOMATİK TESLİMAT VE SİLME
-Supabase Vault içinde şu iki secret'ı oluştur:
-buki_support_url = https://aqmhjpcsasshttmkdkks.supabase.co/functions/v1/buki-support
-buki_support_worker_secret = Edge'deki SUPPORT_WORKER_SECRET ile AYNI değer
-Ardından SQL Editor'de 02-Buki-Destek-Cron.txt dosyasını çalıştır.
-pg_cron ve pg_net etkin olmalıdır. İşler dakikada bir çalışır. Öğrenci sayfayı
-kapatsa da kuyrukta kalan mesajlar yeniden denenir. Cron job_run_details ve
-Edge Functions durumunu kurulum sonrası kontrol et; içerikleri loglamana gerek yok.
-
-6. TELEGRAM'I BAĞLA
-python3 configure-telegram.py
-Proje adresi: https://aqmhjpcsasshttmkdkks.supabase.co
-İstenen secret, Edge'e kaydettiğin TELEGRAM_WEBHOOK_SECRET ile aynı olmalı.
-Bu araç Telegram API'ye doğrudan bilgisayarından bağlanır, token'ı dosyaya yazmaz.
-Başka webhook kullanan botu değiştirmez. Son EVET adımı bağlantıyı etkinleştirir.
-
-7. SİTE DOSYALARI
-GitHub Pages'in gerçekten yayınladığı klasörde şu BEŞ dosyayı değiştir:
-index.html
-sw.js
-manifest.webmanifest
-icon-192.png
-icon-512.png
-SQL, kurulum ve supabase klasörü sunucu kurulumu içindir; Pages'e yüklemen gerekmez.
-qa.html dosyasını yayınlama (bu paketin dağıtım ZIP'inde yoktur).
-Pages yayınından sonra yenile; gerekirse açık eski sekmeyi kapatıp yeniden aç.
-
-8. SON KONTROL
-Bir öğrenci hesabıyla Ayarlar > Canlı destek üzerinden test mesajı gönder.
-Mesajın altında Telegram'a iletildi yazmalı. Telegram'da bu mesajı seçip
-Yanıtla ile cevap ver; bağımsız yeni mesaj yazarsan siteye aktarılmaz.
-Öğrencinin sohbetinde cevap yaklaşık 8 saniye içinde görünmeli.
-İkinci öğrenci hesabıyla ilk öğrencinin sohbetlerinin görünmediğini kontrol et.
-Bağlantı kesilince kuyruk yeniden dener; Telegram gönderimi başarılı olup
-veritabanı onayı başarısız olursa nadiren aynı bildirim tekrar gelebilir.
-Telegram'da mesaj düzenlemek veya silmek site kopyasını değiştirmez.
-
-10 GÜNLÜK SAKLAMA KURALININ TAM ANLAMI
-Her mesaj kendi gönderim zamanından 10 gün sonra site sorgularından gizlenir;
-sağlıklı cron çalışırken aktif veritabanından en geç sonraki dakikada silinir.
-Yeni cevap eski mesajların süresini uzatmaz. Hiç mesaj kalmayan sohbet de silinir.
-Sohbet içeriği öğrenme yedeğine veya tarayıcı kalıcı depolamasına eklenmez.
-Telegram kopyası, Telegram'a gönderildiği andan itibaren sohbetin kendi 10 günlük
-otomatik silme ayarına tabidir. Kuyruk gecikmesi nedeniyle iki kopyanın son
-silinme anı farklı olabilir. Bot API ile 10 günlük mesajı sonradan silmeye
-güvenilmez: deleteMessage sınırı 48 saattir. Bu yüzden 10 günlük Telegram ayarı
-zorunlu tutulur. Kullanıcı ekran görüntüleri ve sağlayıcıların altyapı yedekleri
-uygulama tarafından silinemez.
-
-MALİYET VE ÇALIŞMA
-AI veya ücretli mesajlaşma servisi eklenmedi. Telegram Bot API kullanılır.
-Supabase mevcut planının fonksiyon, veritabanı ve trafik kotaları geçerlidir;
-sınırsız kullanım veya sürekli anında cevap garantisi yoktur.
+Yönetici Telegram’da öğrenci mesajına Yanıtla ile cevap vermelidir.
+Yalnızca metin desteklenir. Sitedeki sohbet açıkken yanıtlar yaklaşık 8 saniyede bir yenilenir.
+Telegram’da bağımsız yeni mesajlar veya düzenlemeler siteye aktarılmaz.
+Cron teslimat görevi bekleyen mesajları yeniden dener; bakım görevi takılan teslimatları işaretler, sohbet silmez.

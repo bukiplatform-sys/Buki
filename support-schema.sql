@@ -8,11 +8,11 @@ create table if not exists public.buki_support_messages (
  id uuid primary key, thread_id uuid not null references public.buki_support_threads(id) on delete cascade,
  user_id uuid not null references auth.users(id) on delete cascade,
  sender text not null check(sender in ('student','admin')), body text not null check(char_length(body) between 1 and 2000),
- created_at timestamptz not null default now(), expires_at timestamptz not null default (now()+interval '10 days'),
+ created_at timestamptz not null default now(), expires_at timestamptz not null default 'infinity'::timestamptz,
  delivery text not null default 'pending' check(delivery in ('pending','sending','sent','failed')),
  attempts integer not null default 0, retry_at timestamptz not null default now(), claim uuid,
  telegram_chat bigint, telegram_message bigint, unique(telegram_chat,telegram_message),
- check(expires_at=created_at+interval '10 days')
+ check(expires_at='infinity'::timestamptz)
 );
 create index if not exists buki_support_owner on public.buki_support_messages(user_id,created_at desc);
 create index if not exists buki_support_thread on public.buki_support_messages(thread_id,created_at,id);
@@ -101,22 +101,17 @@ create or replace function public.buki_support_reply(parent_id uuid,reply_body t
 language plpgsql security definer set search_path=public,pg_temp as $$
 declare parent public.buki_support_messages; newid uuid:=gen_random_uuid();
 begin
- if sent_at<now()-interval '10 days' or sent_at>now()+interval '5 minutes' or char_length(btrim(reply_body)) not between 1 and 2000 then return jsonb_build_object('ok',false); end if;
+ if sent_at>now()+interval '5 minutes' or char_length(btrim(reply_body)) not between 1 and 2000 then return jsonb_build_object('ok',false); end if;
  select * into parent from public.buki_support_messages where id=parent_id and expires_at>now() and sender='student' for share;
  if not found then return jsonb_build_object('ok',false,'reason','expired'); end if;
  insert into public.buki_support_messages(id,thread_id,user_id,sender,body,created_at,expires_at,delivery,telegram_chat,telegram_message)
- values(newid,parent.thread_id,parent.user_id,'admin',btrim(reply_body),sent_at,sent_at+interval '10 days','sent',chat,tg_message)
+ values(newid,parent.thread_id,parent.user_id,'admin',btrim(reply_body),sent_at,'infinity'::timestamptz,'sent',chat,tg_message)
  on conflict(telegram_chat,telegram_message) do nothing;
  return jsonb_build_object('ok',true);
 end $$;
 create or replace function public.buki_support_cleanup() returns void
 language plpgsql security definer set search_path=public,pg_temp as $$
-declare t record;
 begin
- delete from public.buki_support_messages where expires_at<=now();
- for t in select id from public.buki_support_threads for update skip locked loop
-  delete from public.buki_support_threads x where x.id=t.id and not exists(select 1 from public.buki_support_messages m where m.thread_id=x.id);
- end loop;
  update public.buki_support_messages set delivery='failed',claim=null where delivery='sending' and attempts>=6 and retry_at<now();
 end $$;
 revoke all on function public.buki_support_send(uuid,text,uuid,text),public.buki_support_list(uuid,timestamptz,uuid),public.buki_support_retry(uuid) from public,anon;

@@ -25,7 +25,6 @@ def main():
     admin=input('TELEGRAM_ADMIN_ID: ').strip()
     if not re.fullmatch(r'\d+',chat) or chat!=admin:raise ValueError('Bu kurulum tek yöneticiyle özel bot sohbeti içindir; iki ID aynı olmalı.')
     info=api('getChat',{'chat_id':chat})
-    if info.get('message_auto_delete_time')!=864000:raise ValueError('Önce bu Telegram sohbetinde otomatik silmeyi özel süre: 10 gün olarak ayarla.')
     print('Edge secrets içinde TELEGRAM_CHAT_ID ve TELEGRAM_ADMIN_ID için bu ID değerlerini kaydetmiş olmalısın.')
     if input('Webhook bağlantısını etkinleştirmek için EVET yaz: ').strip()!='EVET':return
     api('setWebhook',{'url':url,'secret_token':secret,'allowed_updates':['message'],'max_connections':4,'drop_pending_updates':False})

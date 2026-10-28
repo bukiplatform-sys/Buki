@@ -9,7 +9,7 @@ do $$ begin
  or not exists(select 1 from vault.decrypted_secrets where name='buki_support_worker_secret') then
  raise exception 'Create buki_support_url and buki_support_worker_secret in Vault first'; end if;
 end $$;
-select cron.schedule('buki-support-expiry','* * * * *','select public.buki_support_cleanup();');
+select cron.schedule('buki-support-maintenance','* * * * *','select public.buki_support_cleanup();');
 select cron.schedule('buki-support-delivery','* * * * *',$job$
  select net.http_post(
   url:=(select decrypted_secret from vault.decrypted_secrets where name='buki_support_url' limit 1),
