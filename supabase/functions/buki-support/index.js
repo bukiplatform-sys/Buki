@@ -1,2 +1,4 @@
 import {makeService} from '../_shared/support.mjs';
-Deno.serve(req=>{try{return makeService(Deno.env.toObject()).worker(req);}catch{return Response.json({error:'support_setup'},{status:503});}});
+import {runtimeLoader} from '../_shared/runtime.mjs';
+const config=runtimeLoader(Deno.env.toObject());
+Deno.serve(async req=>{try{return await makeService(await config()).worker(req);}catch{return Response.json({error:'support_setup'},{status:503});}});

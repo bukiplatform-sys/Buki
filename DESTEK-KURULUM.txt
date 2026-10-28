@@ -1,3 +1,15 @@
+CANLI KURULUM NOTU — 28 EKİM 2026
+Site, destek veritabanı, iki Edge Function ve iki cron görevi yayınlandı.
+Bu sürüm Telegram yapılandırmasını Edge Secrets yerine Supabase Vault üzerinden
+buki_support_runtime() ile okur. Bu RPC yalnızca service_role tarafından çağrılabilir.
+Vault adları: buki_support_bot_token, buki_support_webhook_secret,
+buki_support_worker_secret, buki_support_chat_id, buki_support_admin_id.
+Bot token ve iki rastgele secret kaydedildi. Telegram yönetici hesabını bağlama
+ve 10 günlük otomatik silme doğrulaması henüz tamamlanmadı. Webhook henüz kurulmadı.
+Eski aşağıdaki manuel kurulumdaki Edge Secrets adımları bu canlı kurulumun
+yapılandırma kaynağı değildir; Vault değerleri önceliklidir.
+Token yenilerken Vault buki_support_bot_token değerini değiştir.
+
 BUKI 5.3 — TELEGRAM ÜZERİNDEN İKİ TARAFLI DESTEK
 
 Durum: Kod ve SQL hazır; bu paket canlı hesabına otomatik kurulmuş değildir.
