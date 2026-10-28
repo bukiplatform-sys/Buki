@@ -1,0 +1,8 @@
+# Both handlers verify credentials themselves: user JWT or cron secret for worker,
+# Telegram webhook secret AND allowed administrator/chat AND signed reply for webhook.
+[functions.buki-support]
+verify_jwt = false
+entrypoint = "./functions/buki-support/index.js"
+[functions.buki-telegram]
+verify_jwt = false
+entrypoint = "./functions/buki-telegram/index.js"
