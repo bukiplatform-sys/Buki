@@ -14,3 +14,6 @@
 #worldChat header button{color:#294536;background:transparent}
 #worldChat small,#worldChat .world-chat-status{color:#52664d}
 #worldChat form button{color:#ffffff;background:#45684e}
+/* A native dot cursor stays precise, needs no animation loop, and hides on touch. */
+@media(hover:hover) and (pointer:fine){html,body,body *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6' fill='%232f8cff' stroke='white' stroke-width='2'/%3E%3C/svg%3E") 12 12,auto!important}body input,body textarea,[contenteditable=true]{cursor:text!important}}
+.ai-learning-status{padding:12px 0;color:var(--tx);line-height:1.6;font-size:13px}.ai-feedback{white-space:pre-wrap;line-height:1.8;text-align:left}.ai-learning-tools{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.ai-reading-evidence{border-left:3px solid #89ab76;padding-left:12px}.ai-badge{font-size:11px;letter-spacing:.06em;color:var(--studio-muted);margin-bottom:12px}
