@@ -56,3 +56,10 @@
 @media(max-width:700px){.buki-portal-fx{right:16px}.portal-ring{box-shadow:none}.portal-spark:nth-last-child(-n+6){display:none}}
 @media(prefers-reduced-motion:reduce){.world-chat,.world-chat *{animation:none!important}.buki-portal-fx{display:none}.world-assistant{transition:none}}
 body[data-motion=off] .world-chat,body[data-motion=off] .world-chat *,body.focus-mode .world-chat,body.focus-mode .world-chat *{animation:none!important}body[data-motion=off] .buki-portal-fx,body.focus-mode .buki-portal-fx{display:none}
+
+/* Give the 64px clay objects their own space instead of the old 34px icon box. */
+.studio-extras .studio-tile{align-items:center;gap:18px;min-height:108px}
+.studio-extras .tile-icon{width:72px;height:76px;flex:0 0 72px;background:transparent}
+.studio-extras .tile-copy{min-width:0;display:block}
+.studio-extras .tile-copy strong,.studio-extras .tile-copy small{overflow-wrap:anywhere}
+.studio-extras .tile-copy small{margin-top:6px}

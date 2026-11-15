@@ -1,6 +1,7 @@
 /* Historical features are grouped where old commits only recorded file uploads. */
 (function(){
  const releases=[
+ ['2026-11-15','Görünüm ve gezinme düzeltmeleri',[[ '3D simgelerin kart yazılarıyla çakışması giderildi. Macera merkezindeki geri düğmesi çalışma alanına döner; oyunlardan merkeze dönüş korundu. Koyu tema başlık kontrastı düzeltildi.', 'Fixed clay icons overlapping card text. The adventure hub back button now returns to the workspace; games still return to the hub. Fixed dark-theme heading contrast.']]],
  ['2026-11-15','Buki Expeditions',[
  ['A1, A2, B1 ve B2 için ayrı dedektif vakaları: tanıklara soru sorma, kanıt defteri ve kanıtla desteklenen sonuç.','Separate detective cases for A1–B2: witness questions, evidence notebooks and supported conclusions.'],
  ['Gezilebilir kasaba: kafe, istasyon, ev, dedektif bürosu ve kaçış kapısı. Karakterler son başarılı seçimi hatırlar; evde günlük tutulur.','Interactive town: café, station, home, detective bureau and escape door. Characters remember the last successful choice; home includes a diary.'],
