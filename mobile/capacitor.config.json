@@ -1,0 +1,10 @@
+{
+  "appId": "io.github.bukiplatform.buki",
+  "appName": "Buki",
+  "webDir": "www",
+  "backgroundColor": "#f6f5ef",
+  "server": {"androidScheme": "https"},
+  "android": {"allowMixedContent": false},
+  "ios": {"contentInset": "automatic"},
+  "plugins": {"CapacitorHttp": {"enabled": true}}
+}

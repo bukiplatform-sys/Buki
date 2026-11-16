@@ -1,6 +1,10 @@
 /* Historical features are grouped where old commits only recorded file uploads. */
 (function(){
  const releases=[
+ ['2026-11-16','Mobil uygulama · İlk deneme altyapısı',[
+ ['Buki için Android ve iOS uygulama projeleri eklendi. Ders dosyaları uygulamanın içine paketlenir; mevcut hesapla yeniden giriş yapılır.','Added Android and iOS app projects. Lessons are bundled in the app; sign in again with your existing account.'],
+ ['Android geri tuşu, güvenli ekran boşlukları, konuşma kaydı için mikrofon açıklaması ve mobil bağlantı katmanı eklendi.','Added Android back-button handling, safe-area spacing, a microphone purpose description and native networking.'],
+ ['Android deneme APK’sı ve iOS simülatör derlemesi için otomatik iş akışı eklendi. Mağaza yayını ve iPhone dağıtımı henüz tamamlanmadı.','Added automated Android preview APK and iOS simulator builds. Store publication and iPhone distribution are not yet complete.']]],
  ['2026-11-16','Daha derin bir Buki · Genişletilmiş güncelleme arşivi',[
  ['Macera merkezine katmanlı 3D küre, büyüteç, kapı ve kılıç minyatürleri eklendi.','Added layered 3D globe, magnifying glass, door and sword miniatures to the adventure hub.'],
  ['Bölüm dünyalarına yörüngeler ve yükseltilmiş platformlar; beceri kartlarına ışık, derinlik ve etkileşimli hareket eklendi.','Added orbital details and raised platforms to course worlds, with light, depth and interaction on skill cards.'],
