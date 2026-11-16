@@ -6,3 +6,25 @@
 /* Page copy follows the site theme; light game cards retain dark text. */
 .adventure-shell{color:var(--tx,#253e36)}
 .adventure-heading,.adventure-shell>p{color:var(--tx,#253e36)}
+/* Sculpted objects live in their own reserved space; never over the labels. */
+.relic{display:block;position:relative;width:112px;height:112px;flex-shrink:0;perspective:600px;filter:drop-shadow(0 13px 8px #29422c22)}
+.relic i,.relic b,.relic em{position:absolute;display:block;font-style:normal}
+.relic:after{content:'';position:absolute;bottom:0;left:8px;width:96px;height:20px;border-radius:50%;background:linear-gradient(120deg,#dfe5cb,#aeba97);box-shadow:0 5px #91a47c;z-index:-1}
+.relic-town i{width:75px;height:75px;left:19px;top:8px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#c2efdc,#75beb8 45%,#376f83);box-shadow:inset -10px -9px 15px #25426755,inset 4px 4px 8px #ffffff99}
+.relic-town b{width:36px;height:48px;left:28px;top:16px;border-radius:65% 20% 60% 30%;background:linear-gradient(130deg,#cce49e,#76a974);transform:rotate(-24deg);box-shadow:23px 26px 0 -9px #b4d591}
+.relic-town em{width:105px;height:29px;border:3px solid #d8bd79;border-radius:50%;top:33px;left:3px;transform:rotate(-28deg)}
+.relic-detective i{width:62px;height:62px;left:14px;top:5px;border:10px solid #ccae77;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fffdf9,#b5d9cf99);box-shadow:3px 5px #8e724b,inset 2px 3px 5px #587d8060;transform:rotateY(-15deg)}
+.relic-detective b{height:48px;width:17px;background:linear-gradient(90deg,#719385,#395c52);border-radius:6px;left:73px;top:58px;transform:rotate(-40deg);box-shadow:3px 2px #2e493f}
+.relic-detective em{width:24px;height:7px;left:29px;top:26px;background:#fff9;border-radius:50%;transform:rotate(-40deg)}
+.relic-escape i{inset:3px 23px 10px;border:7px solid #b2acc6;border-bottom:0;border-radius:38px 38px 3px 3px;background:linear-gradient(110deg,#465968,#263c4c);transform:rotateY(-18deg);box-shadow:7px 5px #807c98,inset 5px 0 #1e2d3b}
+.relic-escape b{width:8px;height:8px;left:69px;top:60px;background:#e8cb84;border-radius:50%;box-shadow:0 0 13px #ffe4a0}
+.relic-escape em{height:49px;width:3px;left:45px;top:33px;background:#c7dacc44;box-shadow:11px 0 #c7dacc44}
+.relic-duel i,.relic-duel b{height:83px;width:14px;top:0;left:47px;background:linear-gradient(90deg,#dce6e3 50%,#9aaeb5 50%);clip-path:polygon(50% 0,100% 16%,100% 76%,75% 76%,75% 100%,25% 100%,25% 76%,0 76%,0 16%);transform:rotate(40deg);filter:drop-shadow(3px 2px 0 #68818e)}
+.relic-duel b{transform:rotate(-40deg)}
+.relic-duel em{height:8px;width:39px;top:64px;left:22px;background:#b99a69;transform:rotate(40deg);box-shadow:24px -20px #b99a69;border-radius:4px}
+.adventure-card{border:1px solid #dee3ce!important;box-shadow:0 2px 0 #fff inset,0 8px 0 #bac8ab,0 20px 35px #102f2520!important}
+.town-building .building-model{transform:perspective(600px) rotateX(7deg) rotateY(-10deg);transition:transform .3s}.town-building:hover .building-model{transform:perspective(600px) rotateX(0) rotateY(6deg) translateY(-5px)}
+.expedition-orb{background:radial-gradient(circle at 30% 25%,#9cbaa477,#456b5a55 45%,#183b34);box-shadow:inset -12px -12px 22px #0b241b66,inset 4px 4px 10px #e1efc755,0 12px 24px #0c292b55,0 0 0 24px #c1d3ba08,0 0 0 48px #c1d3ba06}
+@media(hover:hover) and (pointer:fine){.adventure-card:hover .relic{transform:translateY(-5px) rotate(-4deg)}.relic{transition:transform .3s}}
+@media(prefers-reduced-motion:reduce){.relic,.building-model{transition:none!important;transform:none!important}}
+body[data-motion=off] .relic,body[data-motion=off] .building-model,body.focus-mode .relic,body.focus-mode .building-model{transition:none!important;transform:none!important}

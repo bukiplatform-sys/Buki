@@ -63,3 +63,16 @@ body[data-motion=off] .world-chat,body[data-motion=off] .world-chat *,body.focus
 .studio-extras .tile-copy{min-width:0;display:block}
 .studio-extras .tile-copy strong,.studio-extras .tile-copy small{overflow-wrap:anywhere}
 .studio-extras .tile-copy small{margin-top:6px}
+/* Clay depth pass: quiet surfaces, raised objects and bounded interaction. */
+.studio-course .world-mini{isolation:isolate;filter:drop-shadow(0 12px 8px #122d2425)}
+.studio-course .world-mini:before{content:'';position:absolute;inset:22px 12% 18px;border:1px solid #adbf9c50;border-radius:50%;transform:rotate(-18deg);z-index:-1}
+.studio-course .world-mini:after{content:'✦';position:absolute;right:12%;top:15px;font-size:18px;color:#c4ac72;text-shadow:0 3px #8f774d44}
+.studio-course{box-shadow:inset 0 1px 0 #ffffff35,0 7px 0 #81957a35,0 20px 35px #0d2e2415}
+.studio-skills .studio-tile,.studio-extras .studio-tile{box-shadow:inset 0 1px #ffffff30,0 5px 0 #81957a30,0 13px 24px #0d2e2412}
+.studio-tile .world-object{transition:transform .3s,filter .3s}
+.studio-welcome,.studio-daily{box-shadow:inset 0 1px #ffffff40,0 8px 0 #81957a20,0 25px 50px #122d2410}
+.trail-island{border:1px solid #fff7;box-shadow:inset 3px 4px 7px #fff6,0 8px 0 #cbbda2,0 18px 16px #615a2c25;transition:transform .25s}
+.world-stop.current .trail-island{background:radial-gradient(circle at 30% 20%,#faffed,#d6e6b5);box-shadow:inset 3px 4px 7px #fff8,0 8px #9eaf83,0 18px 16px #615a2c25}
+@media(hover:hover) and (pointer:fine){.studio-tile:hover .world-object{transform:perspective(350px) rotateY(-16deg) rotateZ(-5deg) translateY(-5px);filter:drop-shadow(4px 14px 7px #28453130)}.studio-course:hover .mini-cloud{translate:6px -3px}.mini-cloud{transition:translate .5s}.world-stop:hover .trail-island{transform:translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){.studio-tile .world-object,.mini-cloud,.trail-island{transform:none!important;translate:none!important;transition:none!important}}
+body[data-motion=off] .world-object,body[data-motion=off] .mini-cloud,body[data-motion=off] .trail-island,body.focus-mode .world-object,body.focus-mode .mini-cloud,body.focus-mode .trail-island{transform:none!important;translate:none!important;transition:none!important}
