@@ -9,6 +9,8 @@ Node 22+ ile `cd mobile && npm ci`.
 - iOS (Mac / Xcode 26+): `npm run ios`, ardından `npx cap open ios`.
 - Paket kontrolleri: `npm test` (önce build).
 
+Paket, depodaki yayınlanmış `index.html` sürümünü kullanır. Web kaynakları değiştirilirse önce web çıktısı güncellenmelidir.
+
 `android/`, `ios/` ve `www/` üretilir ve depoya kaydedilmez. Yerel native değişiklikleri
 kalıcı tutmak için `prepare.cjs` içine ekleyin. Bağımlılıklar package-lock.json ile sabitlenir.
 

@@ -1,9 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { execFileSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
-fs.mkdirSync(path.join(root,'dist'), {recursive:true});
-execFileSync(process.execPath, [path.join(root,'build-v3.cjs')], {cwd:root,stdio:'inherit'});
+// The committed production index.html is the same release served by GitHub Pages.
+// Package that release rather than depending on untracked legacy build inputs.
 const out = path.join(__dirname,'www');
 fs.rmSync(out,{recursive:true,force:true});
 fs.mkdirSync(out,{recursive:true});

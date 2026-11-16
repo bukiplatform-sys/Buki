@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
     paths: ['mobile/**', '.github/workflows/mobile.yml']
+concurrency:
+  group: buki-mobile-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
