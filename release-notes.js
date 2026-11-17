@@ -1,6 +1,11 @@
 /* Historical features are grouped where old commits only recorded file uploads. */
 (function(){
  const releases=[
+ ['2026-11-17','Kasabada yeni hikâyeler',[
+ ['A1–B2 için ayrı üçer bölümlük etkileşimli dizi eklendi: sahneler, rol seçimi, anlama soruları ve kaldığın yerden devam.','Added three interactive episodes per A1–B2 course, with scenes, role choices, comprehension and saved progress.'],
+ ['Mesaj, takvim ve teslimat uygulamalarını birbirine bağlayan İngilizce telefon simülatörü eklendi.','Added an English phone simulator linking messages, calendar and delivery tasks.'],
+ ['Dizi, telefon ve macera başarılarından seviyeye uygun kişisel kasaba gazetesi oluşturulur. Tarihe göre eski baskılar açılır.','Personal level-appropriate newspapers reflect series, phone and adventure achievements, with dated editions.'],
+ ['Yeni etkinlikler hazır içerikle çalışır; ek AI kotası tüketmez. Bölümler ve hesaplar mevcut ilerleme sistemiyle ayrı saklanır.','New activities use authored content without AI quota. Courses and accounts retain separate progress through existing sync.']]],
  ['2026-11-16','Mobil uygulama · İlk deneme altyapısı',[
  ['Buki için Android ve iOS uygulama projeleri eklendi. Ders dosyaları uygulamanın içine paketlenir; mevcut hesapla yeniden giriş yapılır.','Added Android and iOS app projects. Lessons are bundled in the app; sign in again with your existing account.'],
  ['Android geri tuşu, güvenli ekran boşlukları, konuşma kaydı için mikrofon açıklaması ve mobil bağlantı katmanı eklendi.','Added Android back-button handling, safe-area spacing, a microphone purpose description and native networking.'],
